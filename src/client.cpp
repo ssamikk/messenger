@@ -90,6 +90,7 @@ void Client::on_pushButtonSend_clicked()
         messenger->sendMes(userName, ui->textEditMessage->toPlainText());
         ui->textEditMessage->clear();
     }
+    ui->textEditMessage->setFocus();
 }
 
 void Client::incomingMessage(const QString &userName, const QString &mes)
