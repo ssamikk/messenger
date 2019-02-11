@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "messenger.h"
+#include "message.h"
 #include <QVector>
 
 class Server : public QObject
@@ -12,10 +13,10 @@ public:
     static Server *current();
     ~Server();
 signals:
-    void sendMessage(const QString &userName, const QString &mes);
+    void sendMessage(const Message &mes);
 public slots:
     Messenger::Status registration(const Messenger *messenger, const QString &userName);
-    void inMessage(const QString &userName, const QString &mes);
+    void inMessage(const Message &mes);
     void delUser(const QString &userName);
 private:
     explicit Server(QObject *parent = nullptr);

@@ -19,6 +19,8 @@ set(messenger_SRCS
     src/server.cpp
     src/messenger.h
     src/messenger.cpp
+    src/message.h
+    src/message.cpp
     )
 
 add_executable (${PROJECT_NAME} WIN32 ${messenger_SRCS})

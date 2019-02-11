@@ -11,8 +11,8 @@ Client::Client(bool isAdm, QWidget *parent) :
 {
     ui->setupUi(this);
     messenger = new Messenger(this);
-    connect(messenger, SIGNAL(incomingMessage(const QString &, const QString &)),
-            this, SLOT(incomingMessage(const QString &, const QString &)));
+    connect(messenger, SIGNAL(incomingMessage(const Message &)),
+            this, SLOT(incomingMessage(const Message &)));
     if(isAdm){
         userName = ADMIN_NAME;
         messenger->conectToSrv(userName);
@@ -80,31 +80,32 @@ void Client::on_actionAddUser_triggered()
     if(!client->registration(DEFAULT_NAME)){
         client->close();
         delete client;
+    }else{
+        connect(client, SIGNAL(needDestroy()), this, SLOT(destroyClient()));
     }
-    connect(client, SIGNAL(needDestroy()), this, SLOT(destroyClient()));
 }
 
 void Client::on_pushButtonSend_clicked()
 {
     if(messenger->getStatus()== Messenger::Connected){
-        messenger->sendMes(userName, ui->textEditMessage->toPlainText());
+        Message message(userName, ui->textEditMessage->toPlainText());
+        messenger->sendMes(message);
         ui->textEditMessage->clear();
     }
     ui->textEditMessage->setFocus();
 }
 
-void Client::incomingMessage(const QString &userName, const QString &mes)
+void Client::incomingMessage(const Message &messag)
 {
-    if(lastSender!=userName){
-        lastSender = userName;
+    if(lastSender!=messag.getUser()){
+        lastSender = messag.getUser();
         if(!ui->textEditChat->toPlainText().isEmpty()){
             ui->textEditChat->append("<p/>");
         }
-        ui->textEditChat->append("<p><b>"+userName+"</b></p><p>"+mes+"</p>");
+        ui->textEditChat->append("<p><b>"+messag.getUser()+"</b></p><p>"+messag.getMes()+"</p>");
     }else{
-        ui->textEditChat->append("<p>"+mes+"</p>");
+        ui->textEditChat->append("<p>"+messag.getMes()+"</p>");
     }
-
 }
 
 void Client::updateState()

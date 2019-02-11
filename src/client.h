@@ -1,6 +1,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include "message.h"
+
 #include <QMainWindow>
 
 class Messenger;
@@ -31,7 +33,7 @@ protected:
 private slots:
     void on_actionAddUser_triggered();
     void on_pushButtonSend_clicked();
-    void incomingMessage(const QString &userName, const QString &messenger);
+    void incomingMessage(const Message &messag);
     void updateState();
     void destroyClient();
 private:

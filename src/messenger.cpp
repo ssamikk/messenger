@@ -26,11 +26,11 @@ void Messenger::conectToSrv(const QString &userName)
     status = srv->registration(this, userName);
 }
 
-void Messenger::sendMes(const QString &userName, const QString &message)
+void Messenger::sendMes(const Message &message)
 {
-    if(!message.isEmpty()){
+    if(!message.getMes().isEmpty()){
         Server *srv = Server::current();
-        srv->inMessage(userName, message);
+        srv->inMessage(message);
     }
 }
 

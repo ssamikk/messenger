@@ -26,15 +26,15 @@ Messenger::Status Server::registration(const Messenger *messenger, const QString
         return Messenger::DublicateName;
     }
     clientNames.append(userName);
-    connect(this, SIGNAL(sendMessage(const QString &, const QString &)),
-            messenger, SIGNAL(incomingMessage(const QString &, const QString &)));
+    connect(this, SIGNAL(sendMessage(const Message&)),
+            messenger, SIGNAL(incomingMessage(const Message &)));
 
     return Messenger::Connected;
 }
 
-void Server::inMessage(const QString &userName, const QString &mes)
+void Server::inMessage(const Message &mes)
 {
-    emit sendMessage(userName, mes);
+    emit sendMessage(mes);
 }
 
 void Server::delUser(const QString &userName)

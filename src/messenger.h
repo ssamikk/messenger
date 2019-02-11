@@ -2,6 +2,7 @@
 #define MESSENGER_H
 
 #include <QObject>
+#include "message.h"
 
 class Messenger : public QObject
 {
@@ -19,9 +20,9 @@ public:
     Status getStatus() const;
     void setStatus(const Status &value);
     void conectToSrv(const QString &userName);
-    void sendMes(const QString &userName, const QString &message);
+    void sendMes(const Message &message);
 signals:
-    void incomingMessage(const QString &userName, const QString &message);
+    void incomingMessage(const Message &message);
 public slots:
     void disconnectFromSrv(const QString &userName);
 private:
